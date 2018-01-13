@@ -1,0 +1,13 @@
+---
+- hosts: heitto-server
+  become: yes
+  tasks:
+  - name: Add certbot repo
+    apt_repository:
+      repo: ppa:certbot/certbot
+      state: present
+  
+  - name: Install certbot nginx
+    apt:
+      name: python-certbot-nginx
+      state: present
