@@ -4,6 +4,7 @@
     name: "{{ item }}"
     state: present
   with_items:
+  - htop
   - python-pip
   - protobuf-compiler
 
@@ -12,3 +13,11 @@
     name: "{{ item }}"
   with_items:
   - virtualenv
+
+- name: Install tensorflow deps for production environment
+  pip:
+    name: "{{ item }}"
+    virtualenv: /opt/production-env
+    extra_args: "--no-cache-dir"
+  with_items:
+  - tensorflow
