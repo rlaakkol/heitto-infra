@@ -1,0 +1,14 @@
+---
+- name: Install apt packages
+  apt:
+    name: "{{ item }}"
+    state: present
+  with_items:
+  - python-pip
+  - protobuf-compiler
+
+- name: Install pip packages
+  pip:
+    name: "{{ item }}"
+  with_items:
+  - virtualenv

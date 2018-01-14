@@ -1,0 +1,25 @@
+---
+- name: Add certbot repo
+  apt_repository:
+    repo: ppa:certbot/certbot
+    state: present
+
+- name: Install packages
+  apt:
+    name: "{{ item }}"
+    state: present
+  with_items:
+  - python-certbot-nginx
+
+- name: Create site config
+  template:
+    dest: /etc/nginx/sites-available/heitto
+    src: nginx-site.j2
+  notify: nginx reload
+
+- name: Enable site
+  file:
+    dest: /etc/nginx/sites-enabled/heitto
+    src: /etc/nginx/sites-available/heitto
+    state: link
+  notify: nginx reload

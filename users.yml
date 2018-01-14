@@ -33,3 +33,7 @@
       state: present
     with_items: "{{ users }}"
 
+  - name: Create locales
+    locale_gen:
+      name: fi_FI.UTF-8
+      state: present
