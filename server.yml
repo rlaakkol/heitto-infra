@@ -4,6 +4,6 @@
   vars:
     tensorflow_user: "sika"
   roles:
-  - generic
-  - nginx
-  - tensorflow
+  - { role: generic, tags: generic }
+  - { role: nginx, tags: nginx }
+  - { role: tensorflow, tags: tensorflow }

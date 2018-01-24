@@ -7,6 +7,8 @@
   - htop
   - python-pip
   - protobuf-compiler
+  - python-dev
+  - python-tk
 
 - name: Install pip packages
   pip:
@@ -18,7 +20,7 @@
   git:
     repo: 'https://github.com/tuomoko/sikatrain.git'
     dest: /home/{{ tensorflow_user }}/sikatrain
-    version: master
+    version: gunicorn_api
   become_user: "{{ tensorflow_user }}"
 
 - name: Clone tensorflow models repo
@@ -34,3 +36,32 @@
     extra_args: "--no-cache-dir"
     requirements: /home/{{ tensorflow_user }}/sikatrain/api/requirements.txt
   become_user: "{{ tensorflow_user }}"
+
+- name: Install missing deps
+  pip:
+    name: "{{ item }}"
+    virtualenv: /home/{{ tensorflow_user }}/production-env
+  become_user: "{{ tensorflow_user }}"
+  with_items:
+  - matplotlib
+
+- name: Compile protobuf
+  shell: protoc object_detection/protos/*.proto --python_out=.
+  args:
+    chdir: /home/{{ tensorflow_user }}/models/research
+    creates: /home/{{ tensorflow_user }}/models/research/object_detection/proto/anchor_generator_pb2.py
+  become_user: "{{ tensorflow_user }}"
+
+- name: Install systemd service
+  template:
+    src: sika_api.service.j2
+    dest: /etc/systemd/system/sika_api.service
+  notify:
+  - reload systemd
+  - restart sika_api
+
+- name: Enable sika_api service
+  service:
+    name: sika_api
+    state: started
+    enabled: yes
