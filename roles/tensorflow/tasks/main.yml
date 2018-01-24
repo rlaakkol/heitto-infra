@@ -14,10 +14,20 @@
   with_items:
   - virtualenv
 
+- name: Clone sikatrain repo
+  git:
+    repo: 'https://github.com/tuomoko/sikatrain.git'
+    dest: /opt/sikatrain
+    version: master
+
+- name: Clone tensorflow models repo
+  git:
+    repo: 'https://github.com/tensorflow/models.git'
+    dest: /opt/models
+    version: master
+
 - name: Install tensorflow deps for production environment
   pip:
-    name: "{{ item }}"
     virtualenv: /opt/production-env
     extra_args: "--no-cache-dir"
-  with_items:
-  - tensorflow
+    requirements: /opt/sikatrain/api/requirements.txt
