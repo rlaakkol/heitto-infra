@@ -1,0 +1,14 @@
+[Unit]
+Description=Gunicorn instance to serve sika_api
+After=network.target
+
+[Service]
+User=tuomo
+Group=www-data
+WorkingDirectory=/home/tuomo/sikatrain/api
+Environment="PATH=/home/tuomo/sikatrain/env/bin"
+Environment="PYTHONPATH=/home/tuomo/models/research:/home/tuomo/models/research/slim"
+ExecStart=/home/tuomo/sikatrain/env/bin/gunicorn --workers 1 --bind unix:sika_api.sock -m 007 wsgi:app
+
+[Install]
+WantedBy=multi-user.target
