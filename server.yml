@@ -1,6 +1,9 @@
 ---
 - hosts: heitto-server
   become: yes
+  vars:
+    tensorflow_user: "sika"
   roles:
+  - generic
   - nginx
   - tensorflow

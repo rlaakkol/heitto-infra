@@ -17,17 +17,20 @@
 - name: Clone sikatrain repo
   git:
     repo: 'https://github.com/tuomoko/sikatrain.git'
-    dest: /opt/sikatrain
+    dest: /home/{{ tensorflow_user }}/sikatrain
     version: master
+  become_user: "{{ tensorflow_user }}"
 
 - name: Clone tensorflow models repo
   git:
     repo: 'https://github.com/tensorflow/models.git'
-    dest: /opt/models
+    dest: /home/{{ tensorflow_user }}/models
     version: master
+  become_user: "{{ tensorflow_user }}"
 
 - name: Install tensorflow deps for production environment
   pip:
-    virtualenv: /opt/production-env
+    virtualenv: /home/{{ tensorflow_user }}/production-env
     extra_args: "--no-cache-dir"
-    requirements: /opt/sikatrain/api/requirements.txt
+    requirements: /home/{{ tensorflow_user }}/sikatrain/api/requirements.txt
+  become_user: "{{ tensorflow_user }}"

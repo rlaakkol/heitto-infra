@@ -6,6 +6,8 @@
     users:
     - riku
     - tuomo
+    machine_users:
+    - sika
   tasks:
   - name: install python 2
     raw: apt -y update && apt install -y python-minimal python-zipstream
@@ -16,6 +18,12 @@
       shell: /bin/bash
       group: sudo
     with_items: "{{ users }}"
+
+  - name: Create machine users
+    user:
+      name: "{{ item }}"
+      shell: /bin/bash
+    with_items: "{{ machine_users }}"
 
   - name: Enable passwordless sudo
     lineinfile:
