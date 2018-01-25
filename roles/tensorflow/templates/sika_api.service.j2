@@ -8,6 +8,8 @@ Group=www-data
 WorkingDirectory=/home/{{ tensorflow_user }}/sikatrain/api
 Environment="PATH=/home/{{ tensorflow_user }}/production-env/bin"
 Environment="PYTHONPATH=/home/{{ tensorflow_user }}/models/research:/home/{{ tensorflow_user }}/models/research/slim"
+Environment="FROZEN_MODEL=/home/{{ tensorflow_user }}/graphs/first_ssd_inception_v2/frozen_inference_graph.pb"
+Environment="LABEL_MAP=/home/{{ tensorflow_user }}/sikatrain/model/pig_label_map.pbtxt"
 ExecStart=/home/{{ tensorflow_user }}/production-env/bin/gunicorn --workers 1 --bind unix:sika_api.sock -m 007 wsgi:app
 
 [Install]

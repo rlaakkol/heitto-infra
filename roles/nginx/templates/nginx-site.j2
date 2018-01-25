@@ -1,5 +1,11 @@
 server {
        listen 80;
+       listen [::]:80;
+       server_name heitto.vimpa.in;
+       return 301 https://$server_name$request_uri;
+}
+
+server {
        listen 443 ssl;
 
        server_name heitto.vimpa.in;
@@ -7,10 +13,23 @@ server {
        ssl_certificate /etc/letsencrypt/live/heitto.vimpa.in/fullchain.pem;
        ssl_certificate_key /etc/letsencrypt/live/heitto.vimpa.in/privkey.pem;
 
-       root /var/www/html/;
-       index index.nginx-debian.html;
+       root /home/{{ tensorflow_user }}/sikatrain/api/templates/;
+       index index.html;
 
        location / {
                try_files $uri $uri/ =404;
+       }
+
+       location /static {
+            alias /home/{{ tensorflow_user }}/sikatrain/api/static;
+       }
+
+       location /processed/ {
+               root /home/{{ tensorflow_user }}/sikatrain/api/;
+       }
+
+       location /api/ {
+		include proxy_params;
+		proxy_pass http://unix:/home/{{ tensorflow_user }}/sikatrain/api/sika_api.sock;
        }
 }
