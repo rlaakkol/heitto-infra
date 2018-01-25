@@ -3,6 +3,7 @@
   become: yes
   vars:
     tensorflow_user: "sika"
+    graph_prefix: graphs/first_ssd_inception_v2
   roles:
   - { role: generic, tags: generic }
   - { role: nginx, tags: nginx }
