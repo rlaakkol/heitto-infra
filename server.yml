@@ -6,5 +6,6 @@
     graph_prefix: graphs/first_ssd_inception_v2
   roles:
   - { role: generic, tags: generic }
+  - { role: mongo, tags: mongo }
   - { role: nginx, tags: nginx }
   - { role: tensorflow, tags: tensorflow }
