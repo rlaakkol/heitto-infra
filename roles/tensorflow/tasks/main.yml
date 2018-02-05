@@ -41,7 +41,6 @@
   shell: protoc object_detection/protos/*.proto --python_out=.
   args:
     chdir: /home/{{ tensorflow_user }}/models/research
-    creates: /home/{{ tensorflow_user }}/models/research/object_detection/protos/anchor_generator_pb2.py
   become_user: "{{ tensorflow_user }}"
 
 - name: Install systemd service
