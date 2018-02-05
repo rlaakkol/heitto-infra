@@ -20,7 +20,7 @@
   git:
     repo: 'https://github.com/tuomoko/sikatrain.git'
     dest: /home/{{ tensorflow_user }}/sikatrain
-    version: gunicorn_api
+    version: master
   become_user: "{{ tensorflow_user }}"
 
 - name: Clone tensorflow models repo
