@@ -32,4 +32,9 @@ server {
 		include proxy_params;
 		proxy_pass http://unix:/home/{{ tensorflow_user }}/sikatrain/api/sika_api.sock;
        }
+
+       location /app/ {
+        root /home/{{ tensorflow_user }};
+        try_files $uri /app/index.html;
+       }
 }
