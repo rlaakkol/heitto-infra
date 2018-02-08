@@ -22,6 +22,7 @@
     dest: /home/{{ tensorflow_user }}/sikatrain
     version: master
   become_user: "{{ tensorflow_user }}"
+  notify: restart sika_api
 
 - name: Clone tensorflow models repo
   git:

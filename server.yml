@@ -3,7 +3,7 @@
   become: yes
   vars:
     tensorflow_user: "sika"
-    graph_prefix: graphs/first_ssd_inception_v2
+    graph_prefix: graphs/third_faster_rcnn_inception_v2
   roles:
   - { role: generic, tags: generic }
   - { role: mongo, tags: mongo }
