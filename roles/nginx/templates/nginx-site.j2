@@ -1,40 +1,36 @@
 server {
-       listen 80;
-       listen [::]:80;
-       server_name heitto.vimpa.in;
-       return 301 https://$server_name$request_uri;
+    listen 80;
+    listen [::]:80;
+    server_name heitto.vimpa.in;
+    return 301 https://$server_name$request_uri;
 }
 
 server {
-       listen 443 ssl;
+    listen 443 ssl;
 
-       server_name heitto.vimpa.in;
+    server_name heitto.vimpa.in;
 
-       ssl_certificate /etc/letsencrypt/live/heitto.vimpa.in/fullchain.pem;
-       ssl_certificate_key /etc/letsencrypt/live/heitto.vimpa.in/privkey.pem;
+    ssl_certificate /etc/letsencrypt/live/heitto.vimpa.in/fullchain.pem;
+    ssl_certificate_key /etc/letsencrypt/live/heitto.vimpa.in/privkey.pem;
 
-       root /home/{{ tensorflow_user }}/sikatrain/api/templates/;
-       index index.html;
+    root /home/{{ tensorflow_user }}/app;
+    index index.html;
 
-       location / {
-               try_files $uri $uri/ =404;
-       }
+    location / {
+        try_files $uri /index.html;
+    }
 
-       location /static {
-            alias /home/{{ tensorflow_user }}/sikatrain/api/static;
-       }
+    location /static {
+        alias /home/{{ tensorflow_user }}/sikatrain/api/static;
+    }
 
-       location /processed/ {
-               root /home/{{ tensorflow_user }}/sikatrain/api/;
-       }
+    location /processed/ {
+        root /home/{{ tensorflow_user }}/sikatrain/api/;
+    }
 
-       location /api/ {
-		include proxy_params;
-		proxy_pass http://unix:/home/{{ tensorflow_user }}/sikatrain/api/sika_api.sock;
-       }
+    location /api/ {
+        include proxy_params;
+        proxy_pass http://unix:/home/{{ tensorflow_user }}/sikatrain/api/sika_api.sock;
+    }
 
-       location /app/ {
-        root /home/{{ tensorflow_user }};
-        try_files $uri /app/index.html;
-       }
 }
