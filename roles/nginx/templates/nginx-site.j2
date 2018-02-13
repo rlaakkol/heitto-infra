@@ -10,9 +10,6 @@ server {
 
     server_name heitto.vimpa.in;
 
-    ssl_certificate /etc/letsencrypt/live/heitto.vimpa.in/fullchain.pem;
-    ssl_certificate_key /etc/letsencrypt/live/heitto.vimpa.in/privkey.pem;
-
     root /home/{{ tensorflow_user }}/app;
     index index.html;
 

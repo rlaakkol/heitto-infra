@@ -9,6 +9,8 @@
   - protobuf-compiler
   - python-dev
   - python-tk
+  - python-setuptools
+  - build-essential
 
 - name: Install pip packages
   pip:
