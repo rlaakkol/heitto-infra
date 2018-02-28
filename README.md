@@ -18,3 +18,4 @@ To setup a fresh host, complete the following steps:
   ```sh
   $ ansible-playbook server.yml -v
   ```
+4. Profit
